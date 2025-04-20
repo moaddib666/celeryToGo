@@ -124,6 +124,32 @@ make test-integration
 make lint
 ```
 
+## Releases
+
+CeleryToGo uses GitHub Actions to automatically build and publish binaries when a new tag is pushed to the repository. The following platforms are supported:
+
+- Linux (amd64, arm64)
+- macOS (amd64, arm64)
+- Windows (amd64)
+
+To download pre-built binaries, visit the [Releases](https://github.com/moaddib666/celeryToGo/releases) page.
+
+### Creating a Release
+
+To create a new release:
+
+1. Tag the commit with a version number:
+   ```bash
+   git tag v1.0.0
+   ```
+
+2. Push the tag to GitHub:
+   ```bash
+   git push origin v1.0.0
+   ```
+
+3. GitHub Actions will automatically build the binaries and create a release with the artifacts.
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
