@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  celery-to-go:
+    build:
+      context: ../..
+      dockerfile: examples/docker/Dockerfile
+    image: celery-to-go:latest
+    container_name: celery-to-go
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./config.json:/app/config.json
+    command: --config=/app/config.json
+    ports:
+      - "9090:9090"  # Metrics port
+    depends_on:
+      - prometheus
+      - jaeger
+      # - elasticmq  # Uncomment for local SQS testing
+    networks:
+      - celery-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9091:9090"
+    networks:
+      - celery-network
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    restart: unless-stopped
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"  # UI
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
+      - "4317:4317"  # OTLP gRPC
+      - "4318:4318"  # OTLP HTTP
+    networks:
+      - celery-network
+
+  # Uncomment for local SQS testing
+  # elasticmq:
+  #   image: softwaremill/elasticmq:latest
+  #   container_name: elasticmq
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./elasticmq.conf:/opt/elasticmq.conf
+  #   ports:
+  #     - "9324:9324"
+  #     - "9325:9325"
+  #   networks:
+  #     - celery-network
+
+networks:
+  celery-network:
+    driver: bridge
+
+volumes:
+  prometheus-data:

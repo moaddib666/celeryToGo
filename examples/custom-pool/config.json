@@ -1,0 +1,24 @@
+{
+  "queue_url": "https://sqs.us-east-1.amazonaws.com/123456789012/my-queue.fifo",
+  "region": "us-east-1",
+  "max_messages": 10,
+  "visibility_timeout": 60,
+  "wait_time_seconds": 20,
+  
+  "concurrency": 50,
+  "queue_prefetch": 30,
+  "task_timeout": "15m",
+  "shutdown_timeout": "60s",
+  
+  "min_processes": 20,
+  "max_processes": 100,
+  "max_tasks_per_process": 500,
+  "max_idle_time": "5m",
+  "max_process_age": "30m",
+  "process_startup_timeout": "45s",
+  "process_shutdown_timeout": "30s",
+  
+  "log_level": "info",
+  "metrics_enabled": true,
+  "metrics_endpoint": ":9090"
+}

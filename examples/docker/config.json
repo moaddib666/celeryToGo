@@ -1,0 +1,27 @@
+{
+  "queue_url": "${QUEUE_URL}",
+  "region": "${AWS_REGION}",
+  "max_messages": 10,
+  "visibility_timeout": 60,
+  "wait_time_seconds": 20,
+  
+  "concurrency": 20,
+  "queue_prefetch": 20,
+  "task_timeout": "5m",
+  "shutdown_timeout": "30s",
+  
+  "min_processes": 5,
+  "max_processes": 30,
+  "max_tasks_per_process": 100,
+  "max_idle_time": "5m",
+  "max_process_age": "1h",
+  
+  "log_level": "info",
+  "metrics_enabled": true,
+  "metrics_endpoint": ":9090",
+  "tracing_enabled": true,
+  "tracing_endpoint": "jaeger:4317",
+  "service_name": "celery-go-worker",
+  "service_version": "0.1.0",
+  "environment": "${ENVIRONMENT:-production}"
+}
