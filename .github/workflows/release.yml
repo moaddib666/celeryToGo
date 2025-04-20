@@ -21,7 +21,7 @@ jobs:
           go-version: '1.23'
 
       - name: Build all binaries
-        run: make build build-windows
+        run: make build
 
       - name: Create Release
         id: create_release
